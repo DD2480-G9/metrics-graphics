@@ -14,7 +14,7 @@
         .numericalDomainFromData()
         .numericalRange('bottom');
 
-      var baselines = (args.baselines || []).map(function(d) {
+      const baselines = (args.baselines || []).map(function(d) {
         return d[args.y_accessor]
       });
 
@@ -37,15 +37,15 @@
     };
 
     this.mainPlot = function() {
-      var svg = mg_get_svg_child_of(args.target);
+      const svg = mg_get_svg_child_of(args.target);
 
       //remove the old histogram, add new one
       svg.selectAll('.mg-histogram').remove();
 
-      var g = svg.append('g')
+      const g = svg.append('g')
         .attr('class', 'mg-histogram');
 
-      var bar = g.selectAll('.mg-bar')
+      const bar = g.selectAll('.mg-bar')
         .data(args.data[0])
         .enter().append('g')
         .attr('class', 'mg-bar')
@@ -82,7 +82,7 @@
     };
 
     this.rollover = function() {
-      var svg = mg_get_svg_child_of(args.target);
+      const svg = mg_get_svg_child_of(args.target);
 
       if (svg.selectAll('.mg-active-datapoint-container').nodes().length === 0) {
         mg_add_g(svg, 'mg-active-datapoint-container');
@@ -92,11 +92,11 @@
       svg.selectAll('.mg-rollover-rect').remove();
       svg.selectAll('.mg-active-datapoint').remove();
 
-      var g = svg.append('g')
+      const g = svg.append('g')
         .attr('class', 'mg-rollover-rect');
 
       //draw rollover bars
-      var bar = g.selectAll('.mg-bar')
+      const bar = g.selectAll('.mg-bar')
         .data(args.data[0])
         .enter().append('g')
         .attr('class', function(d, i) {
@@ -135,7 +135,7 @@
     };
 
     this.rolloverOn = function(args) {
-      var svg = mg_get_svg_child_of(args.target);
+      const svg = mg_get_svg_child_of(args.target);
 
       return function(d, i) {
         svg.selectAll('text')
@@ -144,8 +144,8 @@
           })
           .attr('opacity', 0.3);
 
-        var fmt = args.processed.xax_format || MG.time_format(args.utc_time, '%b %e, %Y');
-        var num = format_rollover_number(args);
+        const fmt = args.processed.xax_format || MG.time_format(args.utc_time, '%b %e, %Y');
+        const num = format_rollover_number(args);
 
         svg.selectAll('.mg-bar rect')
           .filter(function(d, j) {
@@ -166,8 +166,8 @@
 
         //update rollover text
         if (args.show_rollover_text) {
-          var mo = mg_mouseover_text(args, { svg: svg });
-          var row = mo.mouseover_row();
+          const mo = mg_mouseover_text(args, { svg: svg });
+          const row = mo.mouseover_row();
           row.text('\u259F  ').elem()
             .classed('hist-symbol', true);
 
@@ -183,7 +183,7 @@
     };
 
     this.rolloverOff = function(args) {
-      var svg = mg_get_svg_child_of(args.target);
+      const svg = mg_get_svg_child_of(args.target);
 
       return function(d, i) {
         if (args.linked && MG.globals.link) {
@@ -225,7 +225,7 @@
     this.init(args);
   }
 
-  var defaults = {
+  const defaults = {
     binned: false,
     bins: null,
     processed_x_accessor: 'x',
