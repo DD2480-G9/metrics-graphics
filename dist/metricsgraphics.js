@@ -2572,7 +2572,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return -1 * (mg_get_plot_top(args) + (mg_get_plot_bottom(args) - mg_get_plot_top(args)) / 2);
       }).attr('y', function () {
         return args.left / 2;
-      }).attr('dy', '0.4em').attr('text-anchor', 'middle').text(function (d) {
+      }).attr('dy', '-1.2em').attr('text-anchor', 'middle').text(function (d) {
         return args.y_label;
       }).attr('transform', function (d) {
         return 'rotate(-90)';
