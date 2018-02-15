@@ -154,7 +154,7 @@
 
         //update rollover text
         if (args.show_rollover_text) {
-          const mo = mg_mouseover_text(args, { svg: svg });
+          const mo = mg_mouseover_text(args, { svg });
           const row = mo.mouseover_row();
           row.text('\u259F  ').elem()
             .classed('hist-symbol', true);
