@@ -2,81 +2,81 @@
   'use strict';
 
   // TODO add styles to stylesheet instead
-  function scaffold(args) {
-    const svg = mg_get_svg_child_of(args.target);
+  function scaffold({target, width, height, top, left, right, buffer}) {
+    const svg = mg_get_svg_child_of(target);
     // main margins
     svg.append('line')
       .attr('x1', 0)
-      .attr('x2', args.width)
-      .attr('y1', args.top)
-      .attr('y2', args.top)
+      .attr('x2', width)
+      .attr('y1', top)
+      .attr('y2', top)
       .attr('stroke', 'black');
     svg.append('line')
       .attr('x1', 0)
-      .attr('x2', args.width)
-      .attr('y1', args.height-args.bottom)
-      .attr('y2', args.height-args.bottom)
+      .attr('x2', width)
+      .attr('y1', height - bottom)
+      .attr('y2', height - bottom)
       .attr('stroke', 'black');
 
     svg.append('line')
-      .attr('x1', args.left)
-      .attr('x2', args.left)
+      .attr('x1', left)
+      .attr('x2', left)
       .attr('y1', 0)
-      .attr('y2', args.height)
+      .attr('y2', height)
       .attr('stroke', 'black');
 
     svg.append('line')
-      .attr('x1', args.width-args.right)
-      .attr('x2', args.width-args.right)
+      .attr('x1', width - right)
+      .attr('x2', width - right)
       .attr('y1', 0)
-      .attr('y2', args.height)
+      .attr('y2', height)
       .attr('stroke', 'black');
 
     // plot area margins
     svg.append('line')
       .attr('x1', 0)
-      .attr('x2', args.width)
-      .attr('y1', args.height-args.bottom-args.buffer)
-      .attr('y2', args.height-args.bottom-args.buffer)
+      .attr('x2', width)
+      .attr('y1', height - bottom - buffer)
+      .attr('y2', height - bottom - buffer)
       .attr('stroke', 'gray');
 
     svg.append('line')
       .attr('x1', 0)
-      .attr('x2', args.width)
-      .attr('y1', args.top+args.buffer)
-      .attr('y2', args.top+args.buffer)
+      .attr('x2', width)
+      .attr('y1', top + buffer)
+      .attr('y2', top + buffer)
       .attr('stroke', 'gray');
 
     svg.append('line')
-      .attr('x1', args.left + args.buffer)
-      .attr('x2', args.left + args.buffer)
+      .attr('x1', left + buffer)
+      .attr('x2', left + buffer)
       .attr('y1', 0)
       .attr('y2', args.height)
       .attr('stroke', 'gray');
     svg.append('line')
-      .attr('x1', args.width -args.right - args.buffer)
-      .attr('x2', args.width -args.right - args.buffer)
+      .attr('x1', width - right - buffer)
+      .attr('x2', width - right - buffer)
       .attr('y1', 0)
-      .attr('y2', args.height)
+      .attr('y2', height)
       .attr('stroke', 'gray');
   }
 
   // barchart re-write.
-  function mg_targeted_legend(args) {
+  function mg_targeted_legend({legend_target, orientation, scales}) {
     let labels;
     const plot = '';
-    if (args.legend_target) {
+    if (legend_target) {
 
-      const div = d3.select(args.legend_target).append('div').classed('mg-bar-target-legend', true);
+      const div = d3.select(legend_target).append('div').classed('mg-bar-target-legend', true);
       
-      if (args.orientation == 'horizontal') labels = args.scales.Y.domain()
-      else labels = args.scales.X.domain();
+      if (orientation == 'horizontal') labels = scales.Y.domain()
+      else labels = scales.X.domain();
 
       labels.forEach(label => {
         const outer_span = div.append('span').classed('mg-bar-target-element', true);
         outer_span.append('span')
           .classed('mg-bar-target-legend-shape', true)
-          .style('color', args.scales.COLOR(label))
+          .style('color', scales.COLOR(label))
           .text('\u25FC ');
         outer_span.append('span')
           .classed('mg-bar-target-legend-text', true)
