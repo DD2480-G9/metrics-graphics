@@ -113,7 +113,7 @@
       const sub_container = textContainer.append('tspan')
         .attr('x', mg_get_plot_right(args))
         .attr('y', args.height / 2)
-        .attr('dy', (lineCount * lineHeight) + 'em');
+        .attr('dy', `${lineCount * lineHeight}em`);
       sub_container.append('tspan')
         .text('\u25a0 ')
         .attr('fill', args.scales.COLOR(label))
@@ -513,10 +513,10 @@
           .append('line');
 
         comparison_marks
-          .attr(length_coord + '1', d => length_scale(d[args.comparison_accessor]))
-          .attr(length_coord + '2', d => length_scale(d[args.comparison_accessor]))
-          .attr(width_coord + '1',  d => width_scalefn(d) - comparison_thickness/2)
-          .attr(width_coord + '2', d => width_scalefn(d) + comparison_thickness/2)
+          .attr(`${length_coord}1`, d => length_scale(d[args.comparison_accessor]))
+          .attr(`${length_coord}2`, d => length_scale(d[args.comparison_accessor]))
+          .attr(`${width_coord}1`,  d => width_scalefn(d) - comparison_thickness/2)
+          .attr(`${width_coord}2`, d => width_scalefn(d) + comparison_thickness/2)
           .attr('stroke', 'black')
           .attr('stroke-width', args.comparison_width);
       }
@@ -747,10 +747,10 @@
           const mouseover = mg_mouseover_text(args, { svg });
           let row = mouseover.mouseover_row();
 
-          if (args.ygroup_accessor) row.text(d[args.ygroup_accessor] + '   ').bold();
+          if (args.ygroup_accessor) row.text(`${d[args.ygroup_accessor]}   `).bold();
 
           row.text(mg_format_x_mouseover(args, d));
-          row.text(args.y_accessor + ': ' + d[args.y_accessor]);
+          row.text(`${args.y_accessor}: ${d[args.y_accessor]}`);
           if (args.predictor_accessor || args.baseline_accessor) {
             row = mouseover.mouseover_row();
 
