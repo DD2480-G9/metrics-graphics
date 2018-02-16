@@ -3,7 +3,7 @@
 
   // TODO add styles to stylesheet instead
   function scaffold(args) {
-    var svg = mg_get_svg_child_of(args.target);
+    const svg = mg_get_svg_child_of(args.target);
     // main margins
     svg.append('line')
       .attr('x1', 0)
@@ -63,17 +63,17 @@
 
   // barchart re-write.
   function mg_targeted_legend(args) {
-    var labels;
-    var plot = '';
+    let labels;
+    const plot = '';
     if (args.legend_target) {
 
-      var div = d3.select(args.legend_target).append('div').classed('mg-bar-target-legend', true);
+      const div = d3.select(args.legend_target).append('div').classed('mg-bar-target-legend', true);
       
       if (args.orientation == 'horizontal') labels = args.scales.Y.domain()
       else labels = args.scales.X.domain();
 
       labels.forEach(function(label) {
-        var outer_span = div.append('span').classed('mg-bar-target-element', true);
+        const outer_span = div.append('span').classed('mg-bar-target-element', true);
         outer_span.append('span')
           .classed('mg-bar-target-legend-shape', true)
           .style('color', args.scales.COLOR(label))
@@ -90,14 +90,14 @@
     // draw each element at the top right
     // get labels
 
-    var labels;
+    let labels;
     if (args.orientation=='horizontal') labels = args.scales.Y.domain()
     else labels = args.scales.X.domain();
 
-    var lineCount = 0;
-    var lineHeight = 1.1;
-    var g = svg.append('g').classed("mg-bar-legend", true);
-    var textContainer = g.append('text');
+    let lineCount = 0;
+    const lineHeight = 1.1;
+    const g = svg.append('g').classed("mg-bar-legend", true);
+    const textContainer = g.append('text');
 
     //
 
@@ -110,7 +110,7 @@
       .attr('text-anchor', 'start');
 
     labels.forEach(function(label) {
-      var sub_container = textContainer.append('tspan')
+      const sub_container = textContainer.append('tspan')
         .attr('x', mg_get_plot_right(args))
         .attr('y', args.height / 2)
         .attr('dy', (lineCount * lineHeight) + 'em');
@@ -168,7 +168,7 @@
       process_point(args);
       init(args);
 
-      var xMaker, yMaker;
+      let xMaker, yMaker;
 
       if (args.x_axis_type === 'categorical') {
         xMaker = MG.scale_factory(args)
@@ -230,7 +230,7 @@
           return args.scalefns.yf(d) + args.scalefns.ygroupf(d) };
 
       } else {
-        var baselines = (args.baselines || []).map(function(d) {
+        const baselines = (args.baselines || []).map(function(d) {
           return d[args.y_accessor] });
 
         yMaker = MG.scale_factory(args)
@@ -295,19 +295,19 @@
     };
 
     this.mainPlot = function() {
-      var svg = mg_get_svg_child_of(args.target);
-      var data = args.data[0];
-      var barplot = svg.select('g.mg-barplot');
-      var fresh_render = barplot.empty();
+      const svg = mg_get_svg_child_of(args.target);
+      const data = args.data[0];
+      let barplot = svg.select('g.mg-barplot');
+      const fresh_render = barplot.empty();
 
-      var bars;
-      var predictor_bars;
-      var pp, pp0;
-      var baseline_marks;
+      let bars;
+      let predictor_bars;
+      let pp, pp0;
+      let baseline_marks;
 
-      var perform_load_animation = fresh_render && args.animate_on_load;
-      var should_transition = perform_load_animation || args.transition_on_update;
-      var transition_duration = args.transition_duration || 1000;
+      const perform_load_animation = fresh_render && args.animate_on_load;
+      const should_transition = perform_load_animation || args.transition_on_update;
+      const transition_duration = args.transition_duration || 1000;
 
       // draw the plot on first render
       if (fresh_render) {
@@ -348,7 +348,7 @@
       //     .classed('mg-bar-baseline', true);
       // }
 
-      var appropriate_size;
+      let appropriate_size;
 
       // setup transitions
       // if (should_transition) {
@@ -367,12 +367,9 @@
       // }
 
       //appropriate_size = args.scales.Y_ingroup.rangeBand()/1.5;
-      var length, width, length_type, width_type, length_coord, width_coord,
-          length_scalefn, width_scalefn, length_scale, width_scale,
-          length_accessor, width_accessor, length_coord_map, width_coord_map,
-          length_map, width_map;
+      let length, width, length_type, width_type, length_coord, width_coord, length_scalefn, width_scalefn, length_scale, width_scale, length_accessor, width_accessor, length_coord_map, width_coord_map, length_map, width_map;
 
-      var reference_length_map, reference_length_coord_fn;
+      let reference_length_map, reference_length_coord_fn;
 
       if (args.orientation == 'vertical') {
         length = 'height';
@@ -389,7 +386,7 @@
         width_accessor = args.x_accessor;
 
         length_coord_map = function(d) {
-          var l;
+          let l;
           l = length_scalefn(d);
           if (d[length_accessor] < 0) {
             l = length_scale(0);
@@ -425,7 +422,7 @@
         width_accessor = args.y_accessor;
 
         length_coord_map = function(d) {
-          var l;
+          let l;
           l = length_scale(0);
           return l;
         }
@@ -466,7 +463,7 @@
 
 
       bars.attr(width_coord, function(d) {
-        var w;
+        let w;
         if (width_type == 'categorical') {
           w = width_scalefn(d);
         } else {
@@ -493,10 +490,10 @@
 
 
       if (args.reference_accessor !== null) {
-        var reference_data = data.filter(function(d){
+        const reference_data = data.filter(function(d){
           return d.hasOwnProperty(args.reference_accessor);
-        })
-        var reference_bars = barplot.selectAll('.mg-categorical-reference')
+        });
+        const reference_bars = barplot.selectAll('.mg-categorical-reference')
           .data(reference_data)
           .enter()
           .append('rect');
@@ -511,7 +508,7 @@
       }
 
       if (args.comparison_accessor !== null) {
-        var comparison_thickness = null;
+        let comparison_thickness = null;
         if (args.comparison_thickness === null) {
           comparison_thickness = args.bar_thickness/2;
         } else {
@@ -519,10 +516,10 @@
         }
 
 
-        var comparison_data = data.filter(function(d) {
+        const comparison_data = data.filter(function(d) {
           return d.hasOwnProperty(args.comparison_accessor);
-        })
-        var comparison_marks = barplot.selectAll('.mg-categorical-comparison')
+        });
+        const comparison_marks = barplot.selectAll('.mg-categorical-comparison')
           .data(comparison_data)
           .enter()
           .append('line');
@@ -610,8 +607,8 @@
     };
 
     this.rollover = function() {
-      var svg = mg_get_svg_child_of(args.target);
-      var g;
+      const svg = mg_get_svg_child_of(args.target);
+      let g;
 
       if (svg.selectAll('.mg-active-datapoint-container').nodes().length === 0) {
         mg_add_g(svg, 'mg-active-datapoint-container');
@@ -622,11 +619,9 @@
       svg.selectAll('.mg-active-datapoint').remove();
 
       // get orientation
-      var length, width, length_type, width_type, length_coord, width_coord,
-        length_scalefn, width_scalefn, length_scale, width_scale,
-        length_accessor, width_accessor;
+      let length, width, length_type, width_type, length_coord, width_coord, length_scalefn, width_scalefn, length_scale, width_scale, length_accessor, width_accessor;
 
-      var length_coord_map, width_coord_map, length_map, width_map;
+      let length_coord_map, width_coord_map, length_map, width_map;
 
       if (args.orientation == 'vertical') {
         length = 'height';
@@ -666,7 +661,7 @@
         width_accessor = args.y_accessor;
 
         length_coord_map = function(d){
-          var l;
+          let l;
           l = length_scale(0);
           return l;
         }
@@ -677,7 +672,7 @@
       }
 
       //rollover text
-      var rollover_x, rollover_anchor;
+      let rollover_x, rollover_anchor;
       if (args.rollover_align === 'right') {
         rollover_x = args.width - args.right;
         rollover_anchor = 'end';
@@ -701,7 +696,7 @@
         .attr('class', 'mg-rollover-rect');
 
       //draw rollover bars
-      var bars = g.selectAll(".mg-bar-rollover")
+      const bars = g.selectAll(".mg-bar-rollover")
         .data(args.data[0]).enter()
         .append("rect")
         .attr('class', 'mg-bar-rollover');
@@ -709,7 +704,7 @@
       bars.attr('opacity', 0)
         .attr(length_coord, length_coord_map)
         .attr(width_coord, function(d) {
-          var w;
+          let w;
           if (width_type == 'categorical') {
             w = width_scalefn(d);
           } else {
@@ -736,18 +731,18 @@
     };
 
     this.rolloverOn = function(args) {
-      var svg = mg_get_svg_child_of(args.target);
-      var label_accessor = this.is_vertical ? args.x_accessor : args.y_accessor;
-      var data_accessor = this.is_vertical ? args.y_accessor : args.x_accessor;
-      var label_units = this.is_vertical ? args.yax_units : args.xax_units;
+      const svg = mg_get_svg_child_of(args.target);
+      const label_accessor = this.is_vertical ? args.x_accessor : args.y_accessor;
+      const data_accessor = this.is_vertical ? args.y_accessor : args.x_accessor;
+      const label_units = this.is_vertical ? args.yax_units : args.xax_units;
 
       return function(d, i) {
 
-        var fmt = MG.time_format(args.utc_time, '%b %e, %Y');
-        var num = format_rollover_number(args);
+        const fmt = MG.time_format(args.utc_time, '%b %e, %Y');
+        const num = format_rollover_number(args);
 
         //highlight active bar
-        var bar = svg.selectAll('g.mg-barplot .mg-bar')
+        const bar = svg.selectAll('g.mg-barplot .mg-bar')
           .filter(function(d, j) {
             return j === i;
           }).classed('active', true);
@@ -760,8 +755,8 @@
 
         //update rollover text
         if (args.show_rollover_text) {
-          var mouseover = mg_mouseover_text(args, { svg: svg });
-          var row = mouseover.mouseover_row();
+          const mouseover = mg_mouseover_text(args, { svg: svg });
+          let row = mouseover.mouseover_row();
 
           if (args.ygroup_accessor) row.text(d[args.ygroup_accessor] + '   ').bold();
 
@@ -781,11 +776,11 @@
     };
 
     this.rolloverOff = function(args) {
-      var svg = mg_get_svg_child_of(args.target);
+      const svg = mg_get_svg_child_of(args.target);
 
       return function(d, i) {
         //reset active bar
-        var bar = svg.selectAll('g.mg-barplot .mg-bar.active').classed('active', false);
+        const bar = svg.selectAll('g.mg-barplot .mg-bar.active').classed('active', false);
 
         if (args.scales.hasOwnProperty('COLOR')) {
           bar.attr('fill', args.scalefns.colorf(d));
@@ -821,7 +816,7 @@
     this.init(args);
   }
 
-  var defaults = {
+  const defaults = {
     y_padding_percentage: 0.05, // for categorical scales
     y_outer_padding_percentage: .2, // for categorical scales
     ygroup_padding_percentage: 0, // for categorical scales
