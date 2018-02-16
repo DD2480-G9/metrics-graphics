@@ -1,4 +1,4 @@
-(function() {
+((() => {
   'use strict';
 
   // TODO add styles to stylesheet instead
@@ -72,7 +72,7 @@
       if (args.orientation == 'horizontal') labels = args.scales.Y.domain()
       else labels = args.scales.X.domain();
 
-      labels.forEach(function(label) {
+      labels.forEach(label => {
         const outer_span = div.append('span').classed('mg-bar-target-element', true);
         outer_span.append('span')
           .classed('mg-bar-target-legend-shape', true)
@@ -109,7 +109,7 @@
       .attr('height', 100)
       .attr('text-anchor', 'start');
 
-    labels.forEach(function(label) {
+    labels.forEach(label => {
       const sub_container = textContainer.append('tspan')
         .attr('x', mg_get_plot_right(args))
         .attr('y', args.height / 2)
@@ -184,22 +184,17 @@
             .categoricalRangeBands('bottom');
 
         } else {
-          args.scales.XGROUP = function(d) {
-            return mg_get_plot_left(args) };
-          args.scalefns.xgroupf = function(d) {
-            return mg_get_plot_left(args) };
+          args.scales.XGROUP = d => mg_get_plot_left(args);
+          args.scalefns.xgroupf = d => mg_get_plot_left(args);
         }
 
-        args.scalefns.xoutf = function(d) {
-          return args.scalefns.xf(d) + args.scalefns.xgroupf(d)
-        };
+        args.scalefns.xoutf = d => args.scalefns.xf(d) + args.scalefns.xgroupf(d);
       } else {
         xMaker = MG.scale_factory(args)
           .namespace('x')
           .inflateDomain(true)
           .zeroBottom(args.y_axis_type === 'categorical')
-          .numericalDomainFromData((args.baselines || []).map(function(d) {
-            return d[args.x_accessor] }))
+          .numericalDomainFromData((args.baselines || []).map(d => d[args.x_accessor]))
           .numericalRange('bottom');
 
         args.scalefns.xoutf = args.scalefns.xf;
@@ -221,18 +216,14 @@
             .categoricalRangeBands('left');
 
         } else {
-          args.scales.YGROUP = function() {
-            return mg_get_plot_top(args) };
-          args.scalefns.ygroupf = function(d) {
-            return mg_get_plot_top(args) };
+          args.scales.YGROUP = () => mg_get_plot_top(args);
+          args.scalefns.ygroupf = d => mg_get_plot_top(args);
 
         }
-        args.scalefns.youtf = function(d) {
-          return args.scalefns.yf(d) + args.scalefns.ygroupf(d) };
+        args.scalefns.youtf = d => args.scalefns.yf(d) + args.scalefns.ygroupf(d);
 
       } else {
-        const baselines = (args.baselines || []).map(function(d) {
-          return d[args.y_accessor] });
+        const baselines = (args.baselines || []).map(d => d[args.y_accessor]);
 
         yMaker = MG.scale_factory(args)
           .namespace('y')
@@ -241,8 +232,7 @@
           .numericalDomainFromData(baselines)
           .numericalRange('left');
 
-        args.scalefns.youtf = function(d) {
-          return args.scalefns.yf(d) };
+        args.scalefns.youtf = d => args.scalefns.yf(d);
       }
 
       if (args.ygroup_accessor !== null) {
@@ -403,7 +393,7 @@
         length_accessor = args.y_accessor;
         width_accessor = args.x_accessor;
 
-        length_coord_map = function(d) {
+        length_coord_map = d => {
           let l;
           l = length_scalefn(d);
           if (d[length_accessor] < 0) {
@@ -412,17 +402,11 @@
           return l;
         }
 
-        length_map = function(d) {
-          return Math.abs(length_scalefn(d) - length_scale(0));
-        }
+        length_map = d => Math.abs(length_scalefn(d) - length_scale(0))
 
-        reference_length_map = function(d) {
-          return Math.abs(length_scale(d[args.reference_accessor]) - length_scale(0));
-        }
+        reference_length_map = d => Math.abs(length_scale(d[args.reference_accessor]) - length_scale(0))
 
-        reference_length_coord_fn = function(d){
-          return length_scale(d[args.reference_accessor]);
-        }
+        reference_length_coord_fn = d => length_scale(d[args.reference_accessor])
       }
 
       if (args.orientation == 'horizontal') {
@@ -439,23 +423,17 @@
         length_accessor = args.x_accessor;
         width_accessor = args.y_accessor;
 
-        length_coord_map = function(d) {
+        length_coord_map = d => {
           let l;
           l = length_scale(0);
           return l;
         }
 
-        length_map = function(d) {
-          return Math.abs(length_scalefn(d) - length_scale(0));
-        }
+        length_map = d => Math.abs(length_scalefn(d) - length_scale(0))
 
-        reference_length_map = function(d) {
-          return Math.abs(length_scale(d[args.reference_accessor]) - length_scale(0));
-        }
+        reference_length_map = d => Math.abs(length_scale(d[args.reference_accessor]) - length_scale(0))
 
-        reference_length_coord_fn = function(d){
-          return length_scale(0);
-        }
+        reference_length_coord_fn = d => length_scale(0)
       }
 
       // if (perform_load_animation) {
@@ -480,7 +458,7 @@
 
 
 
-      bars.attr(width_coord, function(d) {
+      bars.attr(width_coord, d => {
         let w;
         if (width_type == 'categorical') {
           w = width_scalefn(d);
@@ -500,17 +478,13 @@
 
       bars
         .attr(length, length_map)
-        .attr(width, function(d) {
-          return args.bar_thickness;
-      });
+        .attr(width, d => args.bar_thickness);
 
 
 
 
       if (args.reference_accessor !== null) {
-        const reference_data = data.filter(function(d){
-          return d.hasOwnProperty(args.reference_accessor);
-        });
+        const reference_data = data.filter(d => d.hasOwnProperty(args.reference_accessor));
         const reference_bars = barplot.selectAll('.mg-categorical-reference')
           .data(reference_data)
           .enter()
@@ -518,9 +492,7 @@
 
         reference_bars
           .attr(length_coord, reference_length_coord_fn)
-          .attr(width_coord, function(d) {
-            return width_scalefn(d) - args.reference_thickness/2
-          })
+          .attr(width_coord, d => width_scalefn(d) - args.reference_thickness/2)
           .attr(length, reference_length_map)
           .attr(width, args.reference_thickness);
       }
@@ -534,23 +506,17 @@
         }
 
 
-        const comparison_data = data.filter(function(d) {
-          return d.hasOwnProperty(args.comparison_accessor);
-        });
+        const comparison_data = data.filter(d => d.hasOwnProperty(args.comparison_accessor));
         const comparison_marks = barplot.selectAll('.mg-categorical-comparison')
           .data(comparison_data)
           .enter()
           .append('line');
 
         comparison_marks
-          .attr(length_coord + '1', function(d){return length_scale(d[args.comparison_accessor])})
-          .attr(length_coord + '2', function(d){return length_scale(d[args.comparison_accessor])})
-          .attr(width_coord + '1',  function(d){
-            return width_scalefn(d) - comparison_thickness/2;
-          })
-          .attr(width_coord + '2', function(d) {
-            return width_scalefn(d) + comparison_thickness/2;
-          })
+          .attr(length_coord + '1', d => length_scale(d[args.comparison_accessor]))
+          .attr(length_coord + '2', d => length_scale(d[args.comparison_accessor]))
+          .attr(width_coord + '1',  d => width_scalefn(d) - comparison_thickness/2)
+          .attr(width_coord + '2', d => width_scalefn(d) + comparison_thickness/2)
           .attr('stroke', 'black')
           .attr('stroke-width', args.comparison_width);
       }
@@ -669,13 +635,9 @@
         length_accessor = args.y_accessor;
         width_accessor = args.x_accessor;
 
-        length_coord_map = function(d){
-          return mg_get_plot_top(args);
-        }
+        length_coord_map = d => mg_get_plot_top(args)
 
-        length_map = function(d) {
-          return args.height -args.top-args.bottom-args.buffer*2
-        }
+        length_map = d => args.height -args.top-args.bottom-args.buffer*2
       }
 
       if (args.orientation == 'horizontal') {
@@ -692,15 +654,13 @@
         length_accessor = args.x_accessor;
         width_accessor = args.y_accessor;
 
-        length_coord_map = function(d){
+        length_coord_map = d => {
           let l;
           l = length_scale(0);
           return l;
         }
 
-        length_map = function(d) {
-          return args.width -args.left-args.right-args.buffer*2
-        }
+        length_map = d => args.width -args.left-args.right-args.buffer*2
       }
 
       //rollover text
@@ -736,7 +696,7 @@
 
       bars.attr('opacity', 0)
         .attr(length_coord, length_coord_map)
-        .attr(width_coord, function(d) {
+        .attr(width_coord, d => {
           let w;
           if (width_type == 'categorical') {
             w = width_scalefn(d);
@@ -751,9 +711,7 @@
         });
 
       bars.attr(length, length_map)
-      bars.attr(width, function(d) {
-        return args.bar_thickness;
-      });
+      bars.attr(width, d => args.bar_thickness);
 
       bars
         .on('mouseover', this.rolloverOn(args))
@@ -769,16 +727,14 @@
       const data_accessor = this.is_vertical ? args.y_accessor : args.x_accessor;
       const label_units = this.is_vertical ? args.yax_units : args.xax_units;
 
-      return function(d, i) {
+      return (d, i) => {
 
         const fmt = MG.time_format(args.utc_time, '%b %e, %Y');
         const num = format_rollover_number(args);
 
         //highlight active bar
         const bar = svg.selectAll('g.mg-barplot .mg-bar')
-          .filter(function(d, j) {
-            return j === i;
-          }).classed('active', true);
+          .filter((d, j) => j === i).classed('active', true);
 
         if (args.scales.hasOwnProperty('COLOR')) {
           bar.attr('fill', d3.rgb(args.scalefns.colorf(d)).darker());
@@ -788,7 +744,7 @@
 
         //update rollover text
         if (args.show_rollover_text) {
-          const mouseover = mg_mouseover_text(args, { svg: svg });
+          const mouseover = mg_mouseover_text(args, { svg });
           let row = mouseover.mouseover_row();
 
           if (args.ygroup_accessor) row.text(d[args.ygroup_accessor] + '   ').bold();
@@ -808,10 +764,10 @@
       };
     };
 
-    this.rolloverOff = function(args) {
+    this.rolloverOff = args => {
       const svg = mg_get_svg_child_of(args.target);
 
-      return function(d, i) {
+      return (d, i) => {
         //reset active bar
         const bar = svg.selectAll('g.mg-barplot .mg-bar.active').classed('active', false);
 
@@ -833,12 +789,10 @@
       };
     };
 
-    this.rolloverMove = function(args) {
-      return function(d, i) {
-        if (args.mousemove) {
-          args.mousemove(d, i);
-        }
-      };
+    this.rolloverMove = args => (d, i) => {
+      if (args.mousemove) {
+        args.mousemove(d, i);
+      }
     };
 
     this.windowListeners = function() {
@@ -884,4 +838,4 @@
 
   MG.register('bar', barChart, defaults);
 
-}).call(this);
+})).call(this);
