@@ -45,7 +45,7 @@
         .data(args.data[0])
         .enter().append('g')
         .attr('class', 'mg-bar')
-        .attr('transform', d => "translate(" + args.scales.X(d[args.x_accessor]).toFixed(2) + "," + args.scales.Y(d[args.y_accessor]).toFixed(2) + ")");
+        .attr('transform', d => `translate(${args.scales.X(d[args.x_accessor]).toFixed(2)},${args.scales.Y(d[args.y_accessor]).toFixed(2)})`);
 
       //draw bars
       bar.append('rect')
@@ -95,12 +95,12 @@
         .enter().append('g')
         .attr('class', (d, i) => {
           if (args.linked) {
-            return 'mg-rollover-rects roll_' + i;
+            return `mg-rollover-rects roll_${i}`;
           } else {
             return 'mg-rollover-rects';
           }
         })
-        .attr('transform', d => "translate(" + (args.scales.X(d[args.x_accessor])) + "," + 0 + ")");
+        .attr('transform', d => `translate(${args.scales.X(d[args.x_accessor])},${0})`);
 
       bar.append('rect')
         .attr('x', 1)
@@ -144,7 +144,7 @@
           MG.globals.link = true;
 
           //trigger mouseover on matching bars in .linked charts
-          d3.selectAll('.mg-rollover-rects.roll_' + i + ' rect')
+          d3.selectAll(`.mg-rollover-rects.roll_${i} rect`)
             .each(function(d) { //use existing i
               d3.select(this).on('mouseover')(d, i);
             });
@@ -176,7 +176,7 @@
           MG.globals.link = false;
 
           //trigger mouseout on matching bars in .linked charts
-          d3.selectAll('.mg-rollover-rects.roll_' + i + ' rect')
+          d3.selectAll(`.mg-rollover-rects.roll_${i} rect`)
             .each(function(d) { //use existing i
               d3.select(this).on('mouseout')(d, i);
             });
