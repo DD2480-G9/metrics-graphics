@@ -1,6 +1,4 @@
 ((() => {
-  'use strict';
-
   function histogram(args) {
     this.init = function(args) {
       this.args = args;
