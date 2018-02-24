@@ -189,6 +189,69 @@
     }
   }
 
+  function mg_get_legend_element_if_array(args, which_line) {
+    if (is_array(args.legend)) {
+        return args.legend[which_line];
+      } else if (is_function(args.legend)) {
+        return args.legend(args.data[which_line]);
+      }
+    return '';
+  }
+
+  function set_legend_text(args, plot, which_line, line_id, this_legend) {
+    if (args.colors && args.colors.constructor === Array) {
+      plot.legend_text = "<span style='color:" + args.colors[which_line] + "'>&mdash; " +
+        this_legend + '&nbsp; </span>' + plot.legend_text;
+    } else {
+      plot.legend_text = "<span class='mg-line" + line_id + "-legend-color'>&mdash; " +
+        this_legend + '&nbsp; </span>' + plot.legend_text;
+    }
+  }
+
+  function mg_add_legend_element(args, plot, which_line, line_id) {
+    var this_legend;
+    if (args.legend) {
+      this_legend = mg_get_legend_element_if_array(args, which_line);
+      if (args.legend_target) {
+        set_legend_text(args, plot, which_line, line_id, this_legend);
+      } else {
+        var anchor_point, anchor_orientation, dx;
+        if (args.y_axis_position === 'left') {
+          anchor_point = args.data[which_line][args.data[which_line].length - 1];
+          anchor_orientation = 'start';
+          dx = args.buffer;
+        } else {
+          anchor_point = args.data[which_line][0];
+          anchor_orientation = 'end';
+          dx = -args.buffer;
+        }
+        var legend_text = plot.legend_group.append('svg:text')
+          .attr('x', args.scalefns.xf(anchor_point))
+          .attr('dx', dx)
+          .attr('y', args.scalefns.yf(anchor_point))
+          .attr('dy', '.35em')
+          .attr('font-size', 10)
+          .attr('text-anchor', anchor_orientation)
+          .attr('font-weight', '300')
+          .text(this_legend);
+
+        if (args.colors && args.colors.constructor === Array) {
+          if (args.colors.length < which_line + 1) {
+            legend_text.classed('mg-line' + (line_id) + '-legend-color', true);
+          } else {
+            legend_text.attr('fill', args.colors[which_line]);
+          }
+        } else {
+          legend_text.classed('mg-line-legend-color', true)
+            .classed('mg-line' + (line_id) + '-legend-color', true);
+        }
+
+        mg_prevent_vertical_overlap(plot.legend_group.selectAll('.mg-line-legend text').nodes(), args);
+      }
+    }
+  }
+
+/*
   function mg_add_legend_element(args, plot, which_line, line_id) {
     var this_legend;
     if (args.legend) {
@@ -242,7 +305,7 @@
       }
     }
   }
-
+*/
   function mg_plot_legend_if_legend_target(target, legend) {
     if (target) {
       d3.select(target).html(legend);
