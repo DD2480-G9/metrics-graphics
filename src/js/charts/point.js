@@ -37,6 +37,7 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
 
   function pointChart(args) {
     this.init = function(args) {
+      point_is_tested = true;
       this.args = args;
 
       // infer y_axis and x_axis type;
@@ -51,24 +52,28 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
       let xMaker, yMaker;
 
       if (args.x_axis_type === 'categorical') {
+        __COVERAGE__['point_this_init'][0] = true;
         xMaker = MG.scale_factory(args)
           .namespace('x')
           .categoricalDomainFromData()
           .categoricalRangeBands([0, args.xgroup_height], args.xgroup_accessor === null);
 
         if (args.xgroup_accessor) {
+          __COVERAGE__['point_this_init'][1] = true;
           new MG.scale_factory(args)
             .namespace('xgroup')
             .categoricalDomainFromData()
             .categoricalRangeBands('bottom');
 
         } else {
+          __COVERAGE__['point_this_init'][2] = true;
           args.scales.XGROUP = () => mg_get_plot_left(args);
           args.scalefns.xgroupf = () => mg_get_plot_left(args);
         }
 
         args.scalefns.xoutf = d => args.scalefns.xf(d) + args.scalefns.xgroupf(d);
       } else {
+        __COVERAGE__['point_this_init'][3] = true;
         xMaker = MG.scale_factory(args)
           .namespace('x')
           .inflateDomain(true)
@@ -81,6 +86,7 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
 
       // y-scale generation. This needs to get simplified.
       if (args.y_axis_type === 'categorical') {
+        __COVERAGE__['point_this_init'][4] = true;
         yMaker = MG.scale_factory(args)
           .namespace('y')
           .zeroBottom(true)
@@ -88,6 +94,7 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
           .categoricalRangeBands([0, args.ygroup_height], true);
 
         if (args.ygroup_accessor) {
+          __COVERAGE__['point_this_init'][5] = true;
 
           new MG.scale_factory(args)
             .namespace('ygroup')
@@ -95,6 +102,7 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
             .categoricalRangeBands('left');
 
         } else {
+          __COVERAGE__['point_this_init'][6] = true;
           args.scales.YGROUP = () => mg_get_plot_top(args);
           args.scalefns.ygroupf = () => mg_get_plot_top(args);
 
@@ -102,6 +110,7 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
         args.scalefns.youtf = d => args.scalefns.yf(d) + args.scalefns.ygroupf(d);
 
       } else {
+        __COVERAGE__['point_this_init'][7] = true;
         const baselines = (args.baselines || []).map(d => d[args.y_accessor]);
         yMaker = MG.scale_factory(args)
           .namespace('y')
@@ -115,8 +124,10 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
 
       /////// COLOR accessor
       if (args.color_accessor !== null) {
+        __COVERAGE__['point_this_init'][8] = true;
         const colorScale = MG.scale_factory(args).namespace('color');
         if (args.color_type === 'number') {
+          __COVERAGE__['point_this_init'][9] = true;
           // do the color scale.
           // etiher get color range, or what.
           colorScale
@@ -124,24 +135,33 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
             .numericalRange(mg_get_color_range(args))
             .clamp(true);
         } else {
+          __COVERAGE__['point_this_init'][10] = true;
           if (args.color_domain) {
+            __COVERAGE__['point_this_init'][11] = true;
             colorScale
               .categoricalDomain(args.color_domain)
               .categoricalRange(args.color_range);
           } else {
+            __COVERAGE__['point_this_init'][12] = true;
             colorScale
               .categoricalDomainFromData()
               .categoricalColorRange();
           }
         }
+      } else {
+        __COVERAGE__['point_this_init'][13] = true;
       }
 
       if (args.size_accessor) {
+        __COVERAGE__['point_this_init'][14] = true;
         new MG.scale_factory(args).namespace('size')
           .numericalDomainFromData()
           .numericalRange(mg_get_size_range(args))
           .clamp(true);
+      } else {
+        __COVERAGE__['point_this_init'][15] = true;
       }
+
 
       new MG.axis_factory(args)
         .namespace('x')

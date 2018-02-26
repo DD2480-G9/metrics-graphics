@@ -203,6 +203,7 @@ MG.scale_factory = MGScale;
 
 /////////////////////////////// x, x_accessor, markers, baselines, etc.
 function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
+
   // A BIT OF EXPLANATION ABOUT THIS FUNCTION
   // This function pulls out all the accessor values in all the arrays in args.data.
   // We also have this additional argument, additional_data_arrays, which is an array of arrays of raw data values.
@@ -218,7 +219,6 @@ function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
   var namespace_accessor_name = scaleArgs.namespace_accessor_name;
   var use_inflator = scaleArgs.use_inflator;
   var zero_bottom = scaleArgs.zero_bottom;
-
   var accessor = args[namespace_accessor_name];
 
   // add together all relevant data arrays.

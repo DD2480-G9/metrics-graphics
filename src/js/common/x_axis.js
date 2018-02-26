@@ -592,21 +592,34 @@ function mg_force_xax_count_to_be_two(args) {
 function mg_sort_through_data_type_and_set_x_min_max_accordingly(mx, args, data) {
   if (args.chart_type === 'line' || args.chart_type === 'point' || args.chart_type === 'histogram') {
     mg_min_max_x_for_nonbars(mx, args, data);
+    __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][0] = true;
+
 
   } else if (args.chart_type === 'bar') {
     mg_min_max_x_for_bars(mx, args, data);
+    __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][1] = true;
+  } else {
+    __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][2] = true;
   }
   // if data set is of length 1, expand the range so that we can build the x-axis
   if (mx.min === mx.max && !(args.min_x && args.max_x)) {
+    __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][3] = true;
     if (mg_is_date(mx.min)) {
       mg_min_max_x_for_dates(mx);
+      __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][4] = true;
     } else if (typeof min_x === 'number') {
       mg_min_max_x_for_numbers(mx);
+      __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][5] = true;
     } else if (typeof min_x === 'string') {
       mg_min_max_x_for_strings(mx);
+      __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][6] = true;
+    } else {
+      __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][7] = true;
     }
     // force xax_count to be 2
     mg_force_xax_count_to_be_two(args);
+  } else {
+    __COVERAGE__['mg_sort_through_data_type_and_set_x_min_max_accordingly'][8] = true;
   }
 }
 
