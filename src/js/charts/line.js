@@ -855,14 +855,14 @@
           const mouseover = mg_mouseover_text(args, { svg });
           let row = mouseover.mouseover_row();
           if (args.aggregate_rollover) {
-            //ID=3
-            __COVERAGE__['line_this_rollOverOn'][3] = true;
+            //ID=2
+            __COVERAGE__['line_this_rollOverOn'][2] = true;
             row.text((args.aggregate_rollover && args.data.length > 1
               ? mg_format_x_aggregate_mouseover
               : mg_format_x_mouseover)(args, d));
           }else {
-            //ID=4
-            __COVERAGE__['line_this_rollOverOn'][4] = true;
+            //ID=3
+            __COVERAGE__['line_this_rollOverOn'][3] = true;
           }
 
           const pts = args.aggregate_rollover && args.data.length > 1
@@ -886,13 +886,13 @@
             row.text(mg_format_y_mouseover(args, di, args.time_series === false));
           })
         } else {
-          //ID=2
-          __COVERAGE__['line_this_rollOverOn'][2] = true;
+          //ID=1
+          __COVERAGE__['line_this_rollOverOn'][1] = true;
         }
 
         if (args.mouseover) {
-          //ID=5
-          __COVERAGE__['line_this_rollOverOn'][2] = true;
+          //ID=4
+          __COVERAGE__['line_this_rollOverOn'][4] = true;
           args.mouseover(d, i);
         }
       };

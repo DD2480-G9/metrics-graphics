@@ -8,7 +8,7 @@ __COVERAGE__['point_this_init'] = new Array();
 
 __COVERAGE__['mg_min_max_numerical'] = new Array(13);
 __COVERAGE__['mg_add_legend_element'] = new Array(15);
-__COVERAGE__['line_this_rollOverOn'] = new Array(6);
+__COVERAGE__['line_this_rollOverOn'] = new Array(5);
 __COVERAGE__['button_this_display'] = new Array(13);
 __COVERAGE__['chart_title'] = new Array(6);
 
