@@ -187,26 +187,47 @@
   function mg_add_legend_element(args, plot, which_line, line_id) {
     let this_legend;
     if (args.legend) {
+      //ID=0
+      __COVERAGE__['mg_add_legend_element'][0] = true;
       if (is_array(args.legend)) {
+        //ID=2
+        __COVERAGE__['mg_add_legend_element'][2] = true;
         this_legend = args.legend[which_line];
       } else if (is_function(args.legend)) {
+        //ID=3
+        __COVERAGE__['mg_add_legend_element'][3] = true;
         this_legend = args.legend(args.data[which_line]);
+      } else {
+        //ID=4
+        __COVERAGE__['mg_add_legend_element'][4] = true;
       }
 
       if (args.legend_target) {
+        //ID=5
+        __COVERAGE__['mg_add_legend_element'][5] = true;
         if (args.colors && args.colors.constructor === Array) {
+          //ID=7
+          __COVERAGE__['mg_add_legend_element'][7] = true;
           plot.legend_text = `<span style='color:${args.colors[which_line]}'>&mdash; ${this_legend}&nbsp; </span>${plot.legend_text}`;
         } else {
+          //ID=8
+          __COVERAGE__['mg_add_legend_element'][8] = true;
           plot.legend_text = `<span class='mg-line${line_id}-legend-color'>&mdash; ${this_legend}&nbsp; </span>${plot.legend_text}`;
         }
       } else {
+        //ID=6
+        __COVERAGE__['mg_add_legend_element'][6] = true;
         let anchor_point, anchor_orientation, dx;
 
         if (args.y_axis_position === 'left') {
+          //ID=9
+          __COVERAGE__['mg_add_legend_element'][9] = true;
           anchor_point = args.data[which_line][args.data[which_line].length - 1];
           anchor_orientation = 'start';
           dx = args.buffer;
         } else {
+          //ID=10
+          __COVERAGE__['mg_add_legend_element'][10] = true;
           anchor_point = args.data[which_line][0];
           anchor_orientation = 'end';
           dx = -args.buffer;
@@ -222,18 +243,29 @@
           .text(this_legend);
 
         if (args.colors && args.colors.constructor === Array) {
+          //ID=11
+          __COVERAGE__['mg_add_legend_element'][11] = true;
           if (args.colors.length < which_line + 1) {
+            //ID=13
+            __COVERAGE__['mg_add_legend_element'][13] = true;
             legend_text.classed(`mg-line${line_id}-legend-color`, true);
           } else {
+            //ID=14
+            __COVERAGE__['mg_add_legend_element'][14] = true;
             legend_text.attr('fill', args.colors[which_line]);
           }
         } else {
+          //ID=12
+          __COVERAGE__['mg_add_legend_element'][12] = true;
           legend_text.classed('mg-line-legend-color', true)
             .classed(`mg-line${line_id}-legend-color`, true);
         }
 
         mg_prevent_vertical_overlap(plot.legend_group.selectAll('.mg-line-legend text').nodes(), args);
       }
+    } else {
+      //ID=1
+    __COVERAGE__['mg_add_legend_element'][1] = true;
     }
   }
 
@@ -818,12 +850,19 @@
         if (args.show_rollover_text &&
             !((args.missing_is_hidden && d['_missing']) || d[args.y_accessor] === null)
           ) {
+          //ID=0
+          __COVERAGE__['line_this_rollOverOn'][0] = true;
           const mouseover = mg_mouseover_text(args, { svg });
           let row = mouseover.mouseover_row();
           if (args.aggregate_rollover) {
+            //ID=3
+            __COVERAGE__['line_this_rollOverOn'][3] = true;
             row.text((args.aggregate_rollover && args.data.length > 1
               ? mg_format_x_aggregate_mouseover
               : mg_format_x_mouseover)(args, d));
+          }else {
+            //ID=4
+            __COVERAGE__['line_this_rollOverOn'][4] = true;
           }
 
           const pts = args.aggregate_rollover && args.data.length > 1
@@ -846,9 +885,14 @@
 
             row.text(mg_format_y_mouseover(args, di, args.time_series === false));
           })
+        } else {
+          //ID=2
+          __COVERAGE__['line_this_rollOverOn'][2] = true;
         }
 
         if (args.mouseover) {
+          //ID=5
+          __COVERAGE__['line_this_rollOverOn'][2] = true;
           args.mouseover(d, i);
         }
       };
