@@ -33,6 +33,7 @@
     "src/js/misc/error.js",
 
     "tests/helpers.js",
+    "tests/coverage_test.js",
 
     "tests/**/*_test.js"
   ],
@@ -40,7 +41,6 @@
     "Chrome"
   ],
   "launch_in_dev": [
-    "PhantomJS",
     "Chrome"
   ],
   "browser_args": {
