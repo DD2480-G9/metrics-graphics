@@ -7,6 +7,8 @@ function chart_title(args) {
   svg.select('.mg-header').remove();
 
   if (args.target && args.title) {
+    //ID=0
+    __COVERAGE__['chart_title'][0] = true;
     var chartTitle = svg.insert('text')
       .attr('class', 'mg-header')
       .attr('x', args.center_title_full_width ? args.width /2 : (args.width + args.left - args.right) / 2)
@@ -21,6 +23,8 @@ function chart_title(args) {
 
     //show and activate the description icon if we have a description
     if (args.show_tooltips && args.description && mg_jquery_exists()) {
+      //ID=2
+      __COVERAGE__['chart_title'][2] = true;
       chartTitle.append('tspan')
         .attr('class', 'mg-chart-description')
         .attr('dx', '0.3em')
@@ -55,11 +59,21 @@ function chart_title(args) {
         }, 120);
       });
     } else if (args.show_tooltips && args.description && typeof $ === 'undefined') {
+      //ID=3
+      __COVERAGE__['chart_title'][3] = true;
       args.error = 'In order to enable tooltips, please make sure you include jQuery.';
+    } else {
+      //ID=4
+      __COVERAGE__['chart_title'][4] = true;
     }
+  } else {
+    //ID=1
+    __COVERAGE__['chart_title'][1] = true;
   }
 
   if (args.error) {
+    //ID=5
+    __COVERAGE__['chart_title'][5] = true;
     error(args);
   }
 }

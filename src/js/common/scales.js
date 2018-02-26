@@ -229,9 +229,14 @@ function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
 
   // do processing for log
   if (args[namespace + '_scale_type'] === 'log') {
+    //ID=0
+    __COVERAGE__['mg_min_max_numerical'][0] = true;
     all_data = all_data.filter(function(d) {
       return d > 0;
     });
+  } else {
+    //ID=1
+    __COVERAGE__['mg_min_max_numerical'][1] = true;
   }
 
   // use inflator?
@@ -244,15 +249,30 @@ function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
   // not zero-bottomed
   // not a time series
   if (zero_bottom && !args['min_' + namespace + '_from_data'] && min_val > 0 && !scaleArgs.is_time_series) {
+    //ID=2
+    __COVERAGE__['mg_min_max_numerical'][2] = true;
     min_val = args[namespace + '_scale_type'] === 'log' ? 1 : 0;
+  } else {
+    //ID=3
+    __COVERAGE__['mg_min_max_numerical'][3] = true;
   }
 
   if (args[namespace + '_scale_type'] !== 'log' && min_val < 0 && !scaleArgs.is_time_series) {
+    //ID=4
+    __COVERAGE__['mg_min_max_numerical'][4] = true;
     min_val = min_val - (min_val - min_val * args.inflator) * use_inflator;
+  } else {
+    //ID=5
+    __COVERAGE__['mg_min_max_numerical'][5] = true;
   }
 
   if (!scaleArgs.is_time_series) {
+    //ID=6
+    __COVERAGE__['mg_min_max_numerical'][6] = true;
     max_val = (max_val < 0) ? max_val + (max_val - max_val * args.inflator) * use_inflator : max_val * (use_inflator ? args.inflator : 1);
+  } else {
+    //ID=7
+    __COVERAGE__['mg_min_max_numerical'][7] = true;
   }
 
   min_val = args['min_' + namespace] || min_val;
@@ -261,12 +281,24 @@ function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
   // so we're displaying some kind of range
   if (min_val === max_val && args['min_' + namespace] === undefined &&
       args['max_' + namespace] === undefined) {
+        //ID=8
+      __COVERAGE__['mg_min_max_numerical'][8] = true;
     if (mg_is_date(min_val)) {
+      //ID=10
+      __COVERAGE__['mg_min_max_numerical'][10] = true;
       max_val = new Date(MG.clone(min_val).setDate(min_val.getDate() + 1));
     } else if (typeof min_val === 'number') {
+      //ID=11
+      __COVERAGE__['mg_min_max_numerical'][11] = true;
       max_val = min_val + 1;
       mg_force_xax_count_to_be_two(args);
+    } else {
+      //ID=12
+      __COVERAGE__['mg_min_max_numerical'][12] = true;
     }
+  }else {
+    //ID=9
+    __COVERAGE__['mg_min_max_numerical'][9] = true;
   }
 
   args.processed['min_' + namespace] = min_val;
