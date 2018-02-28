@@ -1,3 +1,4 @@
+/**Sets the title of the chart by changing the HTML element mg-chart-title.*/
 function chart_title(args) {
   'use strict';
 

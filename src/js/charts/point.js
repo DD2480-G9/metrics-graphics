@@ -36,6 +36,11 @@ function mg_color_point_mouseover({color_accessor, scalefns}, elem, d) {
   }
 
   function pointChart(args) {
+    /**Initializing point chart.
+
+     @param args: 
+     An associative array (dictionary) with the properties of the chart.
+     */
     this.init = function(args) {
       this.args = args;
 

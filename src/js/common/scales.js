@@ -201,6 +201,8 @@ function MGScale(args) {
 
 MG.scale_factory = MGScale;
 
+/** Decides the min and max values of the x axis and the
+ *  y axis in chart that is created, and the appearance of the scales. */
 /////////////////////////////// x, x_accessor, markers, baselines, etc.
 function mg_min_max_numerical(args, scaleArgs, additional_data_arrays) {
   // A BIT OF EXPLANATION ABOUT THIS FUNCTION

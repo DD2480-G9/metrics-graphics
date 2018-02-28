@@ -44,6 +44,7 @@ MG.button_layout = function(target) {
     return this;
   };
 
+  /** Responsible for creating buttons which update the graphs. */
   this.display = function() {
     var callback = this._callback;
     var manual_callback = this.manual_callback;

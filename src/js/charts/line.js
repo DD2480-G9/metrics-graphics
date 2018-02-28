@@ -184,6 +184,7 @@
     }
   }
 
+  /**Builds a legend HTML element*/
   function mg_add_legend_element(args, plot, which_line, line_id) {
     let this_legend;
     if (args.legend) {
@@ -803,6 +804,8 @@
         }
     };
 
+    /** Returns a function for what should happen
+     * when the mouse cursor hovers above a line. */
     this.rolloverOn = args => {
       const svg = mg_get_svg_child_of(args.target);
 

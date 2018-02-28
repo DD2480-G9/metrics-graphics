@@ -91,6 +91,9 @@ MG.data_table = function(args) {
     return this;
   };
 
+  /** 
+	Determines the appearance of a table chart. 
+  */
   this.display = function() {
     var args = this.args;
 

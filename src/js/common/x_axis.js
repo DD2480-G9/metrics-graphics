@@ -588,7 +588,7 @@ function mg_min_max_x_for_strings(mx) {
 function mg_force_xax_count_to_be_two(args) {
   args.xax_count = 2;
 }
-
+/**Decides what value should be minimum on the x-axis and expands the range if data set is of length 1.*/
 function mg_sort_through_data_type_and_set_x_min_max_accordingly(mx, args, data) {
   if (args.chart_type === 'line' || args.chart_type === 'point' || args.chart_type === 'histogram') {
     mg_min_max_x_for_nonbars(mx, args, data);
